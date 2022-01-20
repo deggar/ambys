@@ -126,9 +126,9 @@ function UploadManifest({
 
       {Manifestfile && (
         <>
-          <div>
+          <div className="mt-2 mb-3">
             <TextField
-              className="flex-1 mt-2"
+              className="flex-1 mt-4"
               id="standard-basic"
               label="Starting Animal ID"
               variant="standard"
