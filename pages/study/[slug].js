@@ -471,37 +471,39 @@ export default function Studies(props) {
               </IconButton>
               <p>List of groups for this study:</p>
 
-              <List dense={true}>
-                {Groups.map((group) => {
-                  return (
-                    <ListItem
-                      key={group.uid}
-                      secondaryAction={
-                        <IconButton
-                          edge="end"
-                          aria-label="delete"
-                          onClick={() => removeGroup(group.uid)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      }
-                    >
-                      <ListItemAvatar>
-                        <Avatar>{group.prefix}</Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={group.prefix}
-                        secondaryTypographyProps={{
-                          contenteditable: 'true',
-                          id: 'gd' + group.uid,
-                          onInput: someFunction
-                        }}
-                        secondary={secondary ? group.description : null}
-                      />
-                    </ListItem>
-                  );
-                })}
-              </List>
+              {Groups && (
+                <List dense={true}>
+                  {Groups.map((group) => {
+                    return (
+                      <ListItem
+                        key={group.uid}
+                        secondaryAction={
+                          <IconButton
+                            edge="end"
+                            aria-label="delete"
+                            onClick={() => removeGroup(group.uid)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        }
+                      >
+                        <ListItemAvatar>
+                          <Avatar>{group.prefix}</Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={group.prefix}
+                          secondaryTypographyProps={{
+                            contenteditable: 'true',
+                            id: 'gd' + group.uid,
+                            onInput: someFunction
+                          }}
+                          secondary={secondary ? group.description : null}
+                        />
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              )}
             </>
           )}
         </Card>

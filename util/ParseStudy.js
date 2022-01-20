@@ -1,6 +1,7 @@
 // ES/TS import
-import extractText from 'office-text-extractor';
+// import extractText from 'office-text-extractor';
 import camelCase from 'lodash/camelCase.js';
+import { extractRawText } from 'mammoth';
 
 const defStudy = {
   test: '',
@@ -66,7 +67,17 @@ export default async function ParseStudy(file) {
   //parse data from files
   var theJSON = defStudy;
 
-  const text = await extractText(file);
+  // The parse function
+  async function parseTextFromWordFile(filePath) {
+    let formattedText = '';
+    return new Promise((resolve, reject) => {
+      extractRawText({ path: filePath }).then((result) => {
+        resolve(result.value);
+      });
+    });
+  }
+
+  const text = await parseTextFromWordFile(file);
   try {
     console.log(text);
 
