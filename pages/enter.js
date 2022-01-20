@@ -58,9 +58,9 @@ function SignInButton() {
       <Image
         src={'/google.png'}
         alt="Google Sign in"
-        width={200}
-        height={200}
-      />{' '}
+        width={100}
+        height={100}
+      />
       Sign in with Google
     </button>
   );
