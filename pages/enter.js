@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 
 import { useEffect, useState, useCallback, useContext } from 'react';
 import debounce from 'lodash.debounce';
+import Image from 'next/image';
 
 // Sign in with popup && Google as the provider
 const googleProvider = new GoogleAuthProvider();
@@ -54,7 +55,13 @@ function SignInButton() {
 
   return (
     <button className="btn-google" onClick={signInWithGoogle}>
-      <img src={'/google.png'} /> Sign in with Google
+      <Image
+        src={'/google.png'}
+        alt="Google Sign in"
+        width={200}
+        height={200}
+      />{' '}
+      Sign in with Google
     </button>
   );
 }
@@ -114,30 +121,12 @@ function UsernameForm() {
 
   //
 
-  useEffect(() => {
-    checkUsername(formValue);
-  }, [formValue]);
+  // useEffect(() => {
+  //   checkUsername(formValue);
+  // }, []);
 
   // Hit the database for username match after each debounced change
   // useCallback is required for debounce to work
-  const checkUsername = useCallback(
-    debounce(async (username) => {
-      if (username.length >= 3) {
-        const ref = doc(firestore, `usernames/${username}`);
-        const theDoc = await getDoc(ref);
-        if (theDoc.exists()) {
-          console.log('it exists');
-        } else {
-          console.log('does not exist');
-        }
-        console.log('Firestore read executed!');
-        console.log(theDoc);
-        setIsValid(!theDoc.exists());
-        setLoading(false);
-      }
-    }, 500),
-    []
-  );
 
   return (
     !username && (
