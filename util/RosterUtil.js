@@ -2,7 +2,7 @@ import { doc, setDoc } from '@firebase/firestore';
 import { firestore, auth, postToJSON } from '../lib/firebase';
 
 export function convertToRoster(startID, Study, json) {
-  console.log(startID);
+  // console.log(startID);
   let initialID = +startID,
     savedCrate = [],
     roster = [],
@@ -72,23 +72,23 @@ export function convertToRoster(startID, Study, json) {
   const totalInGroups = totalMaleInGroups + totalFemaleInGroups;
   const leftOver = totalRoster - totalInGroups;
 
-  console.log('totalRoster', totalRoster);
-  console.log('totalInGroups', totalInGroups);
-  console.log('countGroupMale', countGroupMale);
-  console.log('countGroupFemale', countGroupFemale);
-  console.log('leftOver', leftOver);
-  console.log('MaleleftOver', leftMaleOver);
-  console.log('FemaleftOver', leftFemaleOver);
+  // console.log('totalRoster', totalRoster);
+  // console.log('totalInGroups', totalInGroups);
+  // console.log('countGroupMale', countGroupMale);
+  // console.log('countGroupFemale', countGroupFemale);
+  // console.log('leftOver', leftOver);
+  // console.log('MaleleftOver', leftMaleOver);
+  // console.log('FemaleftOver', leftFemaleOver);
 
   //loop over each group and gender and set into each groups
 
   Groups.forEach(function (group, index) {
     const adjust = index == 0 && leftMaleOver ? leftMaleOver : 0;
-    console.log('male group', group);
+    // console.log('male group', group);
     const theNextMales = roster.filter(({ Sex, Group }) => {
       return Sex === 'Male' && Group == '';
     });
-    console.log('theNextMales', theNextMales);
+    // console.log('theNextMales', theNextMales);
     if (theNextMales) {
       theNextMales.forEach(function (line, index) {
         if (index < countGroupMale + adjust) line.Group = group.prefix;
@@ -96,11 +96,11 @@ export function convertToRoster(startID, Study, json) {
     }
 
     const adjustFemale = index == 0 && leftFemaleOver ? leftFemaleOver : 0;
-    console.log('female group', group);
+    // console.log('female group', group);
     const theNextFemales = roster.filter(({ Sex, Group }) => {
       return Sex === 'Female' && Group == '';
     });
-    console.log('theNextFemales', theNextFemales);
+    // console.log('theNextFemales', theNextFemales);
     if (theNextFemales) {
       theNextFemales.forEach(function (line, index) {
         if (index < countGroupFemale + adjustFemale) line.Group = group.prefix;
@@ -121,7 +121,7 @@ export function convertToRoster(startID, Study, json) {
 
   roster.forEach(function (line) {
     line.ID = initialID + inc;
-    console.log(line.RFID, line.ID);
+    // console.log(line.RFID, line.ID);
     ++inc;
   });
 
@@ -129,11 +129,11 @@ export function convertToRoster(startID, Study, json) {
 }
 
 export function saveAnimalsToBD(Roster) {
-  console.log('save to db');
+  // console.log('save to db');
   async function createAnimalRecord(Animal) {
     const ref = doc(firestore, `Animals/${Animal.RFID}`);
     await setDoc(ref, Animal);
-    console.log('saved', Animal);
+    // console.log('saved', Animal);
   }
   if (!Roster.length) {
     return;

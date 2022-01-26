@@ -49,18 +49,26 @@ function SignInButton() {
   const signInWithGoogle = async () => {
     await signInWithPopup(auth, googleProvider);
     if (auth.currentUser) {
-      router.push('/');
+      const theUser = auth.currentUser;
+      console.log(theUser.email);
+      const theEmailDom = theUser.email.split('@')[1];
+      console.log(theEmailDom);
+      console.log(auth.currentUser);
+      console.log(
+        theEmailDom == 'ambys.com' || theUser.email == 'daneggar@gmail.com'
+      );
+      if (theEmailDom == 'ambys.com' || theUser.email == 'daneggar@gmail.com') {
+        router.push('/');
+      } else {
+        signOut(auth);
+        router.push('/notavailable');
+      }
     }
   };
 
   return (
     <button className="btn-google" onClick={signInWithGoogle}>
-      <Image
-        src={'/google.png'}
-        alt="Google Sign in"
-        width={100}
-        height={100}
-      />
+      <Image src={'/google.png'} alt="Google Sign in" width={24} height={24} />
       Sign in with Google
     </button>
   );

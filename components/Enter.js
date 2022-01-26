@@ -46,7 +46,25 @@ export default function Enter(props) {
 function SignInButton() {
   const signInWithGoogle = async () => {
     await signInWithPopup(auth, googleProvider);
+    addName();
   };
+  async function addName() {
+    const userDoc = doc(firestore, `users/${user.uid}`);
+    const usernameDoc = doc(firestore, `usernames/${user.uid}`);
+    console.log(userDoc);
+    // Commit both docs together as a batch write.
+    // const batch = firestore.batch();
+    // Get a new batch
+    const batch = writeBatch(firestore);
+    batch.set(userDoc, {
+      // username: formValue,
+      photoURL: user.photoURL,
+      displayName: user.displayName
+    });
+    batch.set(usernameDoc, { uid: user.uid });
+
+    await batch.commit();
+  }
 
   return (
     <button className="btn-google" onClick={signInWithGoogle}>
@@ -68,9 +86,9 @@ function SignOutButton() {
 
 // Username form
 function UsernameForm() {
-  const [formValue, setFormValue] = useState('');
-  const [isValid, setIsValid] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [formValue, setFormValue] = useState('');
+  // const [isValid, setIsValid] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const { user, username } = useContext(UserContext);
 
@@ -79,14 +97,14 @@ function UsernameForm() {
 
     // Create refs for both documents
     const userDoc = doc(firestore, `users/${user.uid}`);
-    const usernameDoc = doc(firestore, `usernames/${formValue}`);
+    const usernameDoc = doc(firestore, `usernames/${user.uid}`);
 
     // Commit both docs together as a batch write.
     // const batch = firestore.batch();
     // Get a new batch
     const batch = writeBatch(firestore);
     batch.set(userDoc, {
-      username: formValue,
+      // username: formValue,
       photoURL: user.photoURL,
       displayName: user.displayName
     });

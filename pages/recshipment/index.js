@@ -42,7 +42,7 @@ export default function RecShipment(props) {
   //   console.log(props.study);
   const [Study, setStudy] = useState(props.study);
   const [Groups, setGroups] = useState(props.study.Groups);
-  console.log('Groups', Groups);
+  // console.log('Groups', Groups);
   const [Manifestfile, setManifestfile] = useState(null);
   const [Roster, setRoster] = useState(null);
   const [AnimalStartID, setAnimalStartID] = useState('');

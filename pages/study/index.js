@@ -150,7 +150,7 @@ export default function StudyListing(props) {
     );
     await setDoc(ref, Study);
     const theURL = `/study/${Study.studyNumber.value}`;
-    console.log('theURL', theURL);
+    // console.log('theURL', theURL);
     Router.push(theURL);
   }
   const uploadToClient = (event) => {

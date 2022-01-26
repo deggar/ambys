@@ -210,7 +210,7 @@ export default function Studies(props) {
     };
     setGroups((oldArray) => [...oldArray, addGroup]);
     const newGroup = Groups;
-    console.log(newGroup);
+    // console.log(newGroup);
     Study.Groups = newGroup;
     setStudy(Study);
     createStudyRecord(Study);
@@ -226,19 +226,19 @@ export default function Studies(props) {
 
   const someFunction = function (e) {
     const theText = e.target.innerText;
-    console.log(e.target.innerText);
-    console.log(e.target.id);
+    // console.log(e.target.innerText);
+    // console.log(e.target.id);
     // this.setState({html: event.target.value});
     const theID = e.target.id.replace('gd', '');
-    console.log(theID);
+    // console.log(theID);
     const index = Groups.findIndex((fruit) => fruit.uid === theID);
-    console.log('index: ', index);
+    // console.log('index: ', index);
     const updateGroup = Groups[index];
     updateGroup.description = theText;
-    console.log(updateGroup);
+    // console.log(updateGroup);
     Groups[index] = updateGroup;
     setGroups(Groups);
-    console.log(Groups);
+    // console.log(Groups);
     Study.Groups = Groups;
     setStudy(Study);
     createStudyRecord(Study);
@@ -474,7 +474,7 @@ export default function Studies(props) {
                 edge="end"
                 aria-label="add group"
                 onClick={() => {
-                  console.log('adding group');
+                  // console.log('adding group');
                   addGroup();
                 }}
               >
