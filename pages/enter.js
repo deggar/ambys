@@ -55,7 +55,7 @@ function SignInButton() {
       if (theEmailDom == 'ambys.com' || theUser.email == 'daneggar@gmail.com') {
         const userDoc = doc(firestore, `users/${theUser.uid}`);
         const usernameDoc = doc(firestore, `usernames/${theUser.uid}`);
-        console.log(theUser);
+        // console.log(theUser);
         // Commit both docs together as a batch write.
         // const batch = firestore.batch();
         // Get a new batch
