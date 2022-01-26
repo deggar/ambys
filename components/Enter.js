@@ -1,4 +1,5 @@
 // import { auth, googleAuthProvider } from '../lib/firebase';
+import styles from '../styles/Home.module.css';
 import { auth } from '../lib/firebase';
 import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { firestore } from '../lib/firebase';
@@ -28,7 +29,7 @@ export default function Enter(props) {
   // 2. user signed in, but missing username <UsernameForm />
   // 3. user signed in, has username <SignOutButton />
   return (
-    <main>
+    <main className={styles.main}>
       {user ? (
         !username ? (
           <UsernameForm />

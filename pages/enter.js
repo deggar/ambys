@@ -1,4 +1,5 @@
 // import { auth, googleAuthProvider } from '../lib/firebase';
+import styles from '../styles/Home.module.css';
 import { auth } from '../lib/firebase';
 import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { firestore } from '../lib/firebase';
@@ -29,7 +30,7 @@ export default function Enter(props) {
   // 2. user signed in, but missing username <UsernameForm />
   // 3. user signed in, has username <SignOutButton />
   return (
-    <main>
+    <main className={styles.main}>
       {user ? (
         !username ? (
           <UsernameForm />
@@ -50,14 +51,23 @@ function SignInButton() {
     await signInWithPopup(auth, googleProvider);
     if (auth.currentUser) {
       const theUser = auth.currentUser;
-      console.log(theUser.email);
       const theEmailDom = theUser.email.split('@')[1];
-      console.log(theEmailDom);
-      console.log(auth.currentUser);
-      console.log(
-        theEmailDom == 'ambys.com' || theUser.email == 'daneggar@gmail.com'
-      );
       if (theEmailDom == 'ambys.com' || theUser.email == 'daneggar@gmail.com') {
+        const userDoc = doc(firestore, `users/${theUser.uid}`);
+        const usernameDoc = doc(firestore, `usernames/${theUser.uid}`);
+        console.log(theUser);
+        // Commit both docs together as a batch write.
+        // const batch = firestore.batch();
+        // Get a new batch
+        const batch = writeBatch(firestore);
+        batch.set(userDoc, {
+          useremail: theUser.email,
+          photoURL: theUser.photoURL,
+          displayName: theUser.displayName
+        });
+        batch.set(usernameDoc, { uid: theUser.uid });
+
+        await batch.commit();
         router.push('/');
       } else {
         signOut(auth);

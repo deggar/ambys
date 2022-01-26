@@ -4,7 +4,7 @@ import { useState, useContext } from 'react';
 
 async function ParseShippingManifest(e) {
   //   const { Manifest } = useContext(UserContext);
-  console.log('e', e);
+  // console.log('e', e);
 
   var files = e.target.files,
     f = files[0],
@@ -16,10 +16,10 @@ async function ParseShippingManifest(e) {
     var data = new Uint8Array(e.target.result);
     // console.log(data);
     var workbook = XLSX.read(data, { type: 'array' });
-    console.log(workbook);
+    // console.log(workbook);
     /* DO SOMETHING WITH workbook HERE */
     gjson = await process_wb(workbook, 0);
-    console.log(gjson);
+    // console.log(gjson);
     // Manifest = gjson;
     // console.log(Manifest);
     // setManifestfile(gjson);

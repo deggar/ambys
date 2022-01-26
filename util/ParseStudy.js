@@ -79,7 +79,7 @@ export default async function ParseStudy(file) {
 
   const text = await parseTextFromWordFile(file);
   try {
-    console.log(text);
+    // console.log(text);
 
     const fields = [
       'Transplant Date',
@@ -134,17 +134,17 @@ export default async function ParseStudy(file) {
 
     const theProtocol = theStudyID.slice(0, theStudyID.lastIndexOf('-'));
 
-    console.log(theStudyInc);
-    console.log(theProtocol);
+    // console.log(theStudyInc);
+    // console.log(theProtocol);
 
     theJSON['studyIncr'] = { name: 'Study Incr', value: theStudyInc };
     theJSON['protocolNumber'] = { name: 'Protocol Number', value: theProtocol };
 
-    console.log(JSON.stringify(theJSON));
+    // console.log(JSON.stringify(theJSON));
     return theJSON;
   } catch (err) {
-    console.log('there was an error -', err);
-    console.error(err);
+    // console.log('there was an error -', err);
+    // console.error(err);
     return err;
   }
 
