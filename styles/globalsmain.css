@@ -95,3 +95,14 @@ td {
   border: 1px solid #c2c4c7;
   line-height: 2rem;
 }
+
+.groupNameHead {
+  font-size: larger;
+  padding: 1rem;
+  background-color: cornsilk;
+}
+
+.groupNameHead > span {
+  font-size: large;
+  font-weight: bold;
+}

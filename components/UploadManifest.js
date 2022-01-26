@@ -7,7 +7,7 @@ import { doc, setDoc } from '@firebase/firestore';
 import { firestore, auth } from '../lib/firebase';
 // import ParseShippingManifest from '../util/ParseShippingManifest';
 import { UserContext } from '../lib/context';
-import { convertToRoster } from '../util/RosterUtil';
+import { convertToRoster, saveAnimalsToBD } from '../util/RosterUtil';
 
 import { Card, Elevation, H3, H5 } from '@blueprintjs/core';
 import {
@@ -153,6 +153,21 @@ function UploadManifest({
             </Button>
           </div>
         </>
+      )}
+      {Roster && (
+        <div className="mt-3">
+          <Button
+            variant="contained"
+            color="success"
+            component="label"
+            onClick={() => {
+              console.log('NEXT');
+              saveAnimalsToBD(Roster);
+            }}
+          >
+            Upload Animals into Study
+          </Button>
+        </div>
       )}
     </Card>
   );

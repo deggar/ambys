@@ -163,7 +163,9 @@ export default function Studies(props) {
   const [createObjectURL, setCreateObjectURL] = useState(null);
 
   const [Study, setStudy] = useState(props.post);
-  const [Groups, setGroups] = useState(props.post.Groups);
+  const [Groups, setGroups] = useState(
+    props.post.Groups ? props.post.Groups : []
+  );
 
   async function createStudyRecord(Study) {
     const ref = doc(
@@ -199,7 +201,7 @@ export default function Studies(props) {
   };
 
   const addGroup = async () => {
-    const seq = Groups.length;
+    const seq = Groups ? Groups.length : 0;
     const addGroup = {
       uid: `G${seq}`,
       prefix: alphabet[seq],
@@ -207,11 +209,19 @@ export default function Studies(props) {
       population: 0
     };
     setGroups((oldArray) => [...oldArray, addGroup]);
+    const newGroup = Groups;
+    console.log(newGroup);
+    Study.Groups = newGroup;
+    setStudy(Study);
+    createStudyRecord(Study);
   };
 
   const removeGroup = (id) => {
     const newGroups = Groups.filter((group) => group.uid !== id);
     setGroups(newGroups);
+    Study.Groups = newGroups;
+    setStudy(Study);
+    createStudyRecord(Study);
   };
 
   const someFunction = function (e) {
@@ -368,7 +378,7 @@ export default function Studies(props) {
             <Link href={`/recshipment?sn=${Study.studyNumber.value}`} passHref>
               <Button
                 component="label"
-                // className={Classes.MINIMAL}
+                className="mt-3"
                 icon="projects"
                 text="Receive Shipping Manifest"
               >
@@ -464,6 +474,7 @@ export default function Studies(props) {
                 edge="end"
                 aria-label="add group"
                 onClick={() => {
+                  console.log('adding group');
                   addGroup();
                 }}
               >

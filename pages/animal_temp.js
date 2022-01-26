@@ -3,7 +3,11 @@ import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-const buttons = [<Button key="one">Goto Current Study</Button>];
+const buttons = [
+  <Button key="one" varient="contained" component="label">
+    Goto Current Study
+  </Button>
+];
 
 export default function Animals({}) {
   return (

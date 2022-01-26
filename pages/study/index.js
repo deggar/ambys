@@ -122,6 +122,10 @@ export default function StudyListing(props) {
   const buttons = [
     <Button
       key="one"
+      variant="contained"
+      component="label"
+      color="success"
+      className="mt-3"
       onClick={() => {
         uploadToServer();
       }}
