@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { doc, setDoc, getDoc } from '@firebase/firestore';
+import {
+  doc,
+  setDoc,
+  getDoc,
+  collectionGroup,
+  getDocs
+} from '@firebase/firestore';
 import { firestore, auth, postToJSON } from '../../lib/firebase';
 
 import { Card, Elevation, H3, H5 } from '@blueprintjs/core';
@@ -22,62 +28,94 @@ import GroupList from '../../components/GroupList';
 import UploadManifest from '../../components/UploadManifest';
 import ManifestTable from '../../components/ManifestTable';
 import RosterTable2 from '../../components/RosterTable2';
+import ExportRoster from '../../components/ExportRoster';
 
-export async function getServerSideProps(context) {
-  // const { slug } = params;
-  const slug = context.query.sn;
-  const proto = slug.slice(0, slug.lastIndexOf('-'));
+export async function getStaticProps({ params }) {
+  const { slug } = params;
+  //   const slug = context.query.sn;
+  const rosterRef = await doc(firestore, `/Rosters`, slug);
+  const roster = postToJSON(await getDoc(rosterRef));
+  const studyNumber = roster.Study;
+  console.log('studyNumber', studyNumber);
+  const proto = studyNumber.slice(0, studyNumber.lastIndexOf('-'));
   const postRef = doc(
     firestore,
-    `/Protocols/${proto}/StudyDesign/${slug}/Study`,
-    slug
+    `/Protocols/${proto}/StudyDesign/${studyNumber}/Study`,
+    studyNumber
   );
-  // const rosterRef = doc(
-  //   firestore,
-  //   `/Protocols/${proto}/StudyDesign/${slug}/Study`,
-  //   slug
-  // );
   const study = postToJSON(await getDoc(postRef));
   const path = postRef.path;
   return {
-    props: { study, path }
+    props: { study, path, roster }
   };
 }
 
-export default function RecShipment(props) {
-  //   console.log(props.study);
+export async function getStaticPaths() {
+  // Improve my using Admin SDK to select empty docs
+  const collectionRef = collectionGroup(firestore, 'Rosters');
+  const snapshot = await getDocs(collectionRef);
+
+  const paths = snapshot.docs.map((doc) => {
+    const { ID } = doc.data();
+    const slug = ID;
+    console.log('slug', slug);
+    return {
+      params: { slug }
+    };
+  });
+
+  return {
+    // must be in this format:
+    // paths: [
+    //   { params: { username, slug }}
+    // ],
+    paths,
+    fallback: 'blocking'
+  };
+}
+
+export default function Receiving(props) {
+  //   console.log(props);
   const [Study, setStudy] = useState(props.study);
   const [Groups, setGroups] = useState(props.study.Groups);
-  // console.log('Groups', Groups);
-  const [Manifestfile, setManifestfile] = useState(null);
-  const [Roster, setRoster] = useState(null);
+  //   console.log('props.study.Groups', props.study.Groups);
+  const [Manifestfile, setManifestfile] = useState(props.roster.Manifestfile);
+  const [Roster, setRoster] = useState(props.roster.List);
   const [AnimalStartID, setAnimalStartID] = useState('');
 
   return (
     <>
-      <Typography variant="h6" sx={{ margin: '.7rem' }}>
-        Shipping Manifest for {Study.studyNumber.value}
-      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between'
+        }}
+      >
+        <Typography variant="h6" sx={{ margin: '.7rem', display: 'inline' }}>
+          Group Roster for {Study.studyNumber.value}
+        </Typography>
+        <ExportRoster Roster={props.roster} />
+      </Box>
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'space-around'
         }}
       >
-        <GroupList
+        {/* <GroupList
           theStudy={Study}
           Groups={Groups}
           setGroups={setGroups}
           Study={Study}
           setStudy={setStudy}
-        />
+        /> */}
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-around'
           }}
         >
-          <UploadManifest
+          {/* <UploadManifest
             Manifestfile={Manifestfile}
             setManifestfile={setManifestfile}
             AnimalStartID={AnimalStartID}
@@ -85,7 +123,7 @@ export default function RecShipment(props) {
             Roster={Roster}
             setRoster={setRoster}
             Study={Study}
-          />
+          /> */}
         </Box>
       </Box>
       {Manifestfile && Roster == null && (

@@ -3,8 +3,13 @@ import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import { Button, Intent, Spinner } from '@blueprintjs/core';
 import Loader from '../components/Loader';
+import UpdateListing from '../components/UpdateListing';
+import { useContext } from 'react';
+import { UserContext } from '../lib/context';
+import { Box, Grid, Container } from '@mui/material';
 
 export default function Home() {
+  const { user, username } = useContext(UserContext);
   return (
     <div className={styles.container}>
       <Head>
@@ -18,6 +23,8 @@ export default function Home() {
           Welcome to <a>Ambys!</a>
         </h1>
         {/* <Spinner intent={Intent.PRIMARY} /> */}
+
+        {user && <UpdateListing />}
       </main>
     </div>
   );

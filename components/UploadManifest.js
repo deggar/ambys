@@ -33,11 +33,13 @@ function UploadManifest({
   //   const [Manifestfile, setManifestfile] = useState(null);
   async function ParseShippingManifest(e) {
     //   const { Manifest } = useContext(UserContext);
-    console.log('e', e);
+    // console.log('e', e);
 
     var files = e.target.files,
       f = files[0],
       gjson = [];
+
+    console.log('f.name', f.name);
 
     var reader = new FileReader();
     reader.onload = async function (e) {
@@ -45,14 +47,17 @@ function UploadManifest({
       var data = new Uint8Array(e.target.result);
       // console.log(data);
       var workbook = XLSX.read(data, { type: 'array' });
-      console.log(workbook);
+      // console.log(workbook);
       /* DO SOMETHING WITH workbook HERE */
       gjson = await process_wb(workbook, 0);
-      console.log(gjson);
+      // console.log(gjson);
       // Manifest = gjson;
-      setManifestfile(gjson);
-      console.log('Manifestfile', Manifestfile);
-      return gjson;
+      console.log('gjson', gjson);
+      const newgjson = gjson.map((obj) => ({ ...obj, filename: f.name }));
+      console.log('gjson', newgjson);
+      setManifestfile(newgjson);
+      // console.log('Manifestfile', Manifestfile);
+      return newgjson;
       //   manifestInfo.innerHTML = `File: ${f.name}<br> Date: ${workbook.Props.LastPrinted}`;
       //   createFileImport(gjson);
     };
@@ -98,7 +103,7 @@ function UploadManifest({
       const parser = ParseShippingManifest;
       const result = await parser(event.nativeEvent);
       //   Manifest = await result;
-      console.log('result', result);
+      // console.log('result', result);
       //   console.log('Manifest', Manifest);
       //   console.log(Manifestfile);
     }
@@ -162,7 +167,7 @@ function UploadManifest({
             component="label"
             onClick={() => {
               console.log('NEXT');
-              saveAnimalsToBD(Roster);
+              saveAnimalsToBD(Roster, Manifestfile, Study);
             }}
           >
             Upload Animals into Study

@@ -8,7 +8,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/table/lib/css/table.css';
 
-function RosterTable({ Roster, setRoster }) {
+function RosterTable({ Roster, setRoster, Groups }) {
   const columns = [
     { key: 'Group', name: 'Group', width: '3rem' },
     { key: 'ID', name: 'ID', width: '4rem' },
@@ -25,7 +25,8 @@ function RosterTable({ Roster, setRoster }) {
     { key: 'Dame', name: 'Dame', width: '6rem' },
     { key: 'Sire', name: 'Sire', width: '6rem' },
     { key: 'Genotype', name: 'Genotype', width: '8rem' },
-    { key: 'BW', name: 'BW', width: '3rem' }
+    { key: 'BW', name: 'BW', width: '3rem' },
+    { key: 'CloudyEyes', name: 'Cloudy', width: '3rem' }
   ];
 
   const colhead = columns.map((col) => {
@@ -90,10 +91,17 @@ function RosterTable({ Roster, setRoster }) {
           console.log(groupedRoster);
           drid = group;
           console.log('drid', drid);
+          let groupIs = Groups.filter(function (line) {
+            return line.prefix == drid;
+          });
+          console.log('groupIs', groupIs);
           return (
             <div key={drid}>
               <div className="groupNameHead">
                 Group <span>{drid}</span>
+                <div className="inline text-sm pl-3">
+                  {groupIs[0].description}
+                </div>
               </div>
               <Droppable droppableId={drid}>
                 {(provided, snapshot) => (

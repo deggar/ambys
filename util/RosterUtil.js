@@ -1,5 +1,6 @@
 import { doc, setDoc } from '@firebase/firestore';
 import { firestore, auth, postToJSON } from '../lib/firebase';
+import { v4 as uuidv4 } from 'uuid';
 
 export function convertToRoster(startID, Study, json) {
   // console.log(startID);
@@ -23,6 +24,7 @@ export function convertToRoster(startID, Study, json) {
       line.Study = Study.studyNumber.value;
 
       nline = {
+        Filename: line['filename'],
         Crate: line['Crate'],
         Qty: line['Qty'],
         Species: line['Species'],
@@ -37,6 +39,7 @@ export function convertToRoster(startID, Study, json) {
         Sire: line['Sire'],
         Genotype: line['Genotype'],
         BW: line['BW'],
+        CloudyEyes: line['Cloudy eyes?'] ? 'yes' : 'no',
         ID: line['ID'],
         Study: line['Study'],
         Group: ''
@@ -125,11 +128,36 @@ export function convertToRoster(startID, Study, json) {
     ++inc;
   });
 
+  // console.log('roster', roster);
   return roster;
 }
 
-export function saveAnimalsToBD(Roster) {
+export function saveAnimalsToBD(Roster, Manifestfile, Study) {
   // console.log('save to db');
+  //save roster with uuid
+
+  async function createRoster(Roster, Manifestfile, Study) {
+    if (!Roster.length) {
+      return;
+    }
+    const slug = uuidv4();
+    const protocol = Roster[0].Study.slice(0, Roster[0].Study.lastIndexOf('-'));
+    const saveRoster = {
+      ID: slug,
+      Protocol: protocol,
+      Study: Roster[0].Study,
+      Filename: Roster[0].Filename,
+      List: Roster,
+      Manifestfile: Manifestfile,
+      Groups: Study.Groups
+    };
+    console.log('saveRoster', saveRoster);
+    // const slug = 'Roster';
+    const rosterRef = doc(firestore, `/Rosters/`, slug);
+    await setDoc(rosterRef, saveRoster);
+    // console.log('saveRoster', saveRoster);
+  }
+
   async function createAnimalRecord(Animal) {
     const ref = doc(firestore, `Animals/${Animal.RFID}`);
     await setDoc(ref, Animal);
@@ -138,9 +166,10 @@ export function saveAnimalsToBD(Roster) {
   if (!Roster.length) {
     return;
   }
-
+  var list = [];
   Roster.forEach(function (line) {
     const nline = {
+      Filename: line['Filename'],
       Crate: line['Crate'],
       Species: line['Species'],
       Strain: line['Strain'],
@@ -154,11 +183,15 @@ export function saveAnimalsToBD(Roster) {
       Sire: line['Sire'],
       Genotype: line['Genotype'],
       BW: line['BW'],
+      CloudyEyes: line['CloudyEyes'],
       ID: line['ID'],
       Study: line['Study'],
       Group: line['Group']
     };
     // console.log(nline);
     createAnimalRecord(nline);
+    list.push(nline);
   });
+
+  createRoster(list, Manifestfile, Study);
 }

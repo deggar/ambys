@@ -58,7 +58,9 @@ export default function Navmain() {
           </Link>
         )}
         {user && (
-          <Button className={Classes.MINIMAL} icon="route" text="Shipping" />
+          <Link href="/receiving" passHref>
+            <Button className={Classes.MINIMAL} icon="route" text="Shipping" />
+          </Link>
         )}
       </NavbarGroup>
     </Navbar>

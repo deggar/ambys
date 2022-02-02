@@ -18,6 +18,7 @@ function ManifestTable({ Manifestfile }) {
             <th>Sire</th>
             <th>Genotype</th>
             <th>BW</th>
+            <th>Cloudy</th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +40,7 @@ function ManifestTable({ Manifestfile }) {
                   <td>{line.Sire}</td>
                   <td>{line.Genotype}</td>
                   <td>{line.BW}</td>
+                  <td>{line['Cloudy eyes?']}</td>
                 </tr>
               );
           })}

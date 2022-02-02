@@ -28,6 +28,7 @@ import { firestore, auth, postToJSON } from '../../lib/firebase';
 import { AddCircleOutlineRounded } from '@mui/icons-material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Link from 'next/link';
+import GroupList from '../../components/GroupList';
 
 const alphabet = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
 
@@ -199,50 +200,6 @@ export default function Studies(props) {
       createStudyRecord(theData);
     }
   };
-
-  const addGroup = async () => {
-    const seq = Groups ? Groups.length : 0;
-    const addGroup = {
-      uid: `G${seq}`,
-      prefix: alphabet[seq],
-      description: `Group ${alphabet[seq]}`,
-      population: 0
-    };
-    setGroups((oldArray) => [...oldArray, addGroup]);
-    const newGroup = Groups;
-    // console.log(newGroup);
-    Study.Groups = newGroup;
-    setStudy(Study);
-    createStudyRecord(Study);
-  };
-
-  const removeGroup = (id) => {
-    const newGroups = Groups.filter((group) => group.uid !== id);
-    setGroups(newGroups);
-    Study.Groups = newGroups;
-    setStudy(Study);
-    createStudyRecord(Study);
-  };
-
-  const someFunction = function (e) {
-    const theText = e.target.innerText;
-    // console.log(e.target.innerText);
-    // console.log(e.target.id);
-    // this.setState({html: event.target.value});
-    const theID = e.target.id.replace('gd', '');
-    // console.log(theID);
-    const index = Groups.findIndex((fruit) => fruit.uid === theID);
-    // console.log('index: ', index);
-    const updateGroup = Groups[index];
-    updateGroup.description = theText;
-    // console.log(updateGroup);
-    Groups[index] = updateGroup;
-    setGroups(Groups);
-    // console.log(Groups);
-    Study.Groups = Groups;
-    setStudy(Study);
-    createStudyRecord(Study);
-  }.bind(this);
 
   return (
     <main className="m-5">
@@ -465,58 +422,13 @@ export default function Studies(props) {
           <p> </p>
         </Card>
         <Card className="flex-1 flex-shink">
-          {Study.test != 'test' && (
-            <>
-              <Typography sx={{ mt: 0, mb: 0 }} variant="h6" component="div">
-                Groups
-              </Typography>
-              <IconButton
-                edge="end"
-                aria-label="add group"
-                onClick={() => {
-                  // console.log('adding group');
-                  addGroup();
-                }}
-              >
-                <AddCircleIcon />
-              </IconButton>
-              <p>List of groups for this study:</p>
-
-              {Groups && (
-                <List dense={true}>
-                  {Groups.map((group) => {
-                    return (
-                      <ListItem
-                        key={group.uid}
-                        secondaryAction={
-                          <IconButton
-                            edge="end"
-                            aria-label="delete"
-                            onClick={() => removeGroup(group.uid)}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        }
-                      >
-                        <ListItemAvatar>
-                          <Avatar>{group.prefix}</Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={group.prefix}
-                          secondaryTypographyProps={{
-                            contenteditable: 'true',
-                            id: 'gd' + group.uid,
-                            onInput: someFunction
-                          }}
-                          secondary={secondary ? group.description : null}
-                        />
-                      </ListItem>
-                    );
-                  })}
-                </List>
-              )}
-            </>
-          )}
+          <GroupList
+            theStudy={Study}
+            Groups={Groups}
+            setGroups={setGroups}
+            Study={Study}
+            setStudy={setStudy}
+          />
         </Card>
       </div>
     </main>
