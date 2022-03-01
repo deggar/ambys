@@ -29,9 +29,9 @@ export async function getServerSideProps(context) {
   //     limit(LIMIT)
   //   );
   const postsQuery = await getDocs(collectionRef);
-  console.log(postsQuery);
+  // console.log(postsQuery);
   const rosters = await postsQuery.docs.map(postToJSON);
-  console.log('rosters', rosters);
+  // console.log('rosters', rosters);
   return {
     props: { rosters } // will be passed to the page component as props
   };
@@ -39,7 +39,7 @@ export async function getServerSideProps(context) {
 
 export default function StudyListing(props) {
   const [Rosters, setRosters] = useState(props.rosters);
-  console.log('Rosters', Rosters);
+  // console.log('Rosters', Rosters);
   const buttons = [
     <Button
       key="one"

@@ -39,7 +39,7 @@ function GroupList({ theStudy, Groups, setGroups, Study, setStudy }) {
       description: `Group ${alphabet[seq]}`,
       population: 0
     };
-    console.log('Groups prev', Groups);
+    // console.log('Groups prev', Groups);
     setGroups((oldArray) => [...oldArray, addGroup]);
     const addingGroups = Groups;
     addingGroups.push(addGroup);
@@ -48,10 +48,10 @@ function GroupList({ theStudy, Groups, setGroups, Study, setStudy }) {
 
     // Groups.push(addGroup);
     // setGroups(Study.Groups);
-    console.log('Groups added?', Groups);
+    // console.log('Groups added?', Groups);
     // Study.Groups = Groups;
     // setStudy(Study);
-    console.log('Study Groups added?', Study);
+    // console.log('Study Groups added?', Study);
     createStudyRecord(Study);
   };
 
@@ -61,26 +61,26 @@ function GroupList({ theStudy, Groups, setGroups, Study, setStudy }) {
     Study.Groups = newGroups;
     setStudy(Study);
     createStudyRecord(Study);
-    console.log('Groups removed?', Groups);
+    // console.log('Groups removed?', Groups);
   };
 
   const sfunction = function (e, group) {
-    console.log('group', group);
-    console.log('e', e);
-    console.log('e.target.value', e.target.value);
+    // console.log('group', group);
+    // console.log('e', e);
+    // console.log('e.target.value', e.target.value);
     const theText = e.target.value;
     const theID = e.target.id; //.replace('gd', '');
-    console.log('theText', theText, 'theID', theID);
+    // console.log('theText', theText, 'theID', theID);
     const index = Groups.findIndex((g) => g.uid === group.uid);
-    console.log('updateGroup index', index);
+    // console.log('updateGroup index', index);
     const updateGroup = Groups[index];
-    console.log('updateGroup', updateGroup);
+    // console.log('updateGroup', updateGroup);
     updateGroup.description = theText;
-    console.log('updateGroup changed?', updateGroup);
+    // console.log('updateGroup changed?', updateGroup);
     Groups[index] = updateGroup;
-    console.log('Groups', Groups);
+    // console.log('Groups', Groups);
     setGroups(Groups);
-    console.log('Groups', Groups);
+    // console.log('Groups', Groups);
     Study.Groups = Groups;
     setStudy(Study);
     createStudyRecord(Study);
@@ -89,10 +89,10 @@ function GroupList({ theStudy, Groups, setGroups, Study, setStudy }) {
   const someFunction = function (e) {
     const theText = e.target.innerText;
     const theID = e.target.id.replace('gd', '');
-    console.log('theText', theText, 'theID', theID);
+    // console.log('theText', theText, 'theID', theID);
     const index = Groups.findIndex((group) => group.uid === theID);
     const updateGroup = Groups[index];
-    console.log('updateGroup', updateGroup);
+    // console.log('updateGroup', updateGroup);
     updateGroup.description = theText;
     Groups[index] = updateGroup;
     setGroups(Groups);

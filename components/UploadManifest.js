@@ -94,12 +94,12 @@ function UploadManifest({
   }
 
   const selectManifest = async (event) => {
-    console.log('event1', event);
+    // console.log('event1', event);
 
     if (event.target.files && event.target.files[0]) {
       const i = event.target.files[0];
-      console.log('i', i);
-      console.log('event.nativeEvent', event.nativeEvent);
+      // console.log('i', i);
+      // console.log('event.nativeEvent', event.nativeEvent);
       const parser = ParseShippingManifest;
       const result = await parser(event.nativeEvent);
       //   Manifest = await result;
@@ -110,7 +110,7 @@ function UploadManifest({
   };
 
   function handleChange(e) {
-    console.log('e.target.name', e.target.name);
+    // console.log('e.target.name', e.target.name);
     setAnimalStartID(e.target.value);
     // setState({ ...state, [e.target.name]: e.target.value });
   }

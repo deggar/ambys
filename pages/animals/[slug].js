@@ -23,9 +23,9 @@ const buttons = [
 
 export async function getStaticProps({ params }) {
   const { slug } = params;
-  console.log('slug', slug);
+  // console.log('slug', slug);
   const sluged = slug.toString();
-  console.log('sluged', sluged);
+  // console.log('sluged', sluged);
   let animal;
   let path;
   // let proto = slug.slice(0, slug.lastIndexOf('-'));
@@ -49,7 +49,7 @@ export async function getStaticPaths() {
   const paths = snapshot.docs.map((doc) => {
     const { RFID } = doc.data();
     const slug = RFID;
-    console.log('slug', slug);
+    // console.log('slug', slug);
     return {
       params: { slug }
     };

@@ -27,8 +27,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import GroupList from '../../components/GroupList';
 import UploadManifest from '../../components/UploadManifest';
 import ManifestTable from '../../components/ManifestTable';
-import RosterTable2 from '../../components/RosterTable2';
+// import RosterTable2 from '../../components/RosterTable2';
+import RosterTableNoDND from '../../components/RosterTableNoDND';
 import ExportRoster from '../../components/ExportRoster';
+import ParseBWworksheet from '../../util/ParseBWworksheet';
 
 export async function getStaticProps({ params }) {
   const { slug } = params;
@@ -36,7 +38,7 @@ export async function getStaticProps({ params }) {
   const rosterRef = await doc(firestore, `/Rosters`, slug);
   const roster = postToJSON(await getDoc(rosterRef));
   const studyNumber = roster.Study;
-  console.log('studyNumber', studyNumber);
+  // console.log('studyNumber', studyNumber);
   const proto = studyNumber.slice(0, studyNumber.lastIndexOf('-'));
   const postRef = doc(
     firestore,
@@ -58,7 +60,7 @@ export async function getStaticPaths() {
   const paths = snapshot.docs.map((doc) => {
     const { ID } = doc.data();
     const slug = ID;
-    console.log('slug', slug);
+    // console.log('slug', slug);
     return {
       params: { slug }
     };
@@ -83,6 +85,22 @@ export default function Receiving(props) {
   const [Roster, setRoster] = useState(props.roster.List);
   const [AnimalStartID, setAnimalStartID] = useState('');
 
+  const selectBW = async (event) => {
+    // console.log('parse BW', event);
+
+    if (event.target.files && event.target.files[0]) {
+      const i = event.target.files[0];
+      // console.log('i', i);
+      // console.log('event.nativeEvent', event.nativeEvent);
+      const parser = ParseBWworksheet;
+      const result = await parser(event.nativeEvent);
+      //   Manifest = await result;
+      // console.log('result', result);
+      //   console.log('Manifest', Manifest);
+      //   console.log(Manifestfile);
+    }
+  };
+
   return (
     <>
       <Box
@@ -95,42 +113,20 @@ export default function Receiving(props) {
           Group Roster for {Study.studyNumber.value}
         </Typography>
         <ExportRoster Roster={props.roster} />
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-around'
-        }}
-      >
-        {/* <GroupList
-          theStudy={Study}
-          Groups={Groups}
-          setGroups={setGroups}
-          Study={Study}
-          setStudy={setStudy}
-        /> */}
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-around'
-          }}
-        >
-          {/* <UploadManifest
-            Manifestfile={Manifestfile}
-            setManifestfile={setManifestfile}
-            AnimalStartID={AnimalStartID}
-            setAnimalStartID={setAnimalStartID}
-            Roster={Roster}
-            setRoster={setRoster}
-            Study={Study}
-          /> */}
-        </Box>
+        <Button variant="contained" component="label">
+          Upload BW File
+          <input type="file" hidden name="bwfile" onChange={selectBW} />
+        </Button>
       </Box>
       {Manifestfile && Roster == null && (
         <ManifestTable Manifestfile={Manifestfile} />
       )}
       {Roster && (
-        <RosterTable2 Roster={Roster} setRoster={setRoster} Groups={Groups} />
+        <RosterTableNoDND
+          Roster={Roster}
+          setRoster={setRoster}
+          Groups={Groups}
+        />
       )}
     </>
   );

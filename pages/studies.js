@@ -126,15 +126,15 @@ export default function Studies({}) {
   const uploadToServer = async (event) => {
     const body = new FormData();
     body.append('file', image);
-    console.log(body);
-    console.log('====prereq===');
+    // console.log(body);
+    // console.log('====prereq===');
     const response = await fetch('/api/file', {
       method: 'POST',
       body
     });
     if (response.ok) {
       const theData = await response.json();
-      console.log(theData);
+      // console.log(theData);
       setStudy(theData);
       createStudyRecord(theData);
     }

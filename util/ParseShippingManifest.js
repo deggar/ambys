@@ -16,7 +16,7 @@ async function ParseShippingManifest(e) {
     var data = new Uint8Array(e.target.result);
     // console.log(data);
     var workbook = XLSX.read(data, { type: 'array', codepage: 65001 });
-    console.log(workbook);
+    // console.log(workbook);
     /* DO SOMETHING WITH workbook HERE */
     gjson = await process_wb(workbook, 0);
     // console.log(gjson);

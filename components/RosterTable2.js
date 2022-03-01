@@ -42,7 +42,7 @@ function RosterTable({ Roster, setRoster, Groups }) {
 
   const data = Roster;
   const groupList = [...new Set(data.map((item) => item.Group))];
-  console.log(groupList);
+  // console.log(groupList);
 
   const dataLine = Roster.map(function (line) {
     const lineset = columns.map((col) => {
@@ -84,17 +84,25 @@ function RosterTable({ Roster, setRoster, Groups }) {
 
       <DragDropContext>
         {groupList.map(function (group) {
-          console.log('group', group);
+          {
+            /* console.log('group', group); */
+          }
           let groupedRoster = Roster.filter(function (line) {
             return line.Group == group;
           });
-          console.log(groupedRoster);
+          {
+            /* console.log(groupedRoster); */
+          }
           drid = group;
-          console.log('drid', drid);
+          {
+            /* console.log('drid', drid); */
+          }
           let groupIs = Groups.filter(function (line) {
             return line.prefix == drid;
           });
-          console.log('groupIs', groupIs);
+          {
+            /* console.log('groupIs', groupIs); */
+          }
           return (
             <div key={drid}>
               <div className="groupNameHead">
