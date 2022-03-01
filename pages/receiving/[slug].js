@@ -52,29 +52,29 @@ export async function getStaticProps({ params }) {
   };
 }
 
-// export async function getStaticPaths() {
-//   // Improve my using Admin SDK to select empty docs
-//   const collectionRef = collectionGroup(firestore, 'Rosters');
-//   const snapshot = await getDocs(collectionRef);
+export async function getStaticPaths() {
+  // Improve my using Admin SDK to select empty docs
+  const collectionRef = collectionGroup(firestore, 'Rosters');
+  const snapshot = await getDocs(collectionRef);
 
-//   const paths = snapshot.docs.map((doc) => {
-//     const { ID } = doc.data();
-//     const slug = ID;
-//     // console.log('slug', slug);
-//     return {
-//       params: { slug }
-//     };
-//   });
+  const paths = snapshot.docs.map((doc) => {
+    const { ID } = doc.data();
+    const slug = ID;
+    // console.log('slug', slug);
+    return {
+      params: { slug }
+    };
+  });
 
-//   return {
-//     // must be in this format:
-//     // paths: [
-//     //   { params: { username, slug }}
-//     // ],
-//     paths,
-//     fallback: 'blocking'
-//   };
-// }
+  return {
+    // must be in this format:
+    // paths: [
+    //   { params: { username, slug }}
+    // ],
+    paths,
+    fallback: 'blocking'
+  };
+}
 
 export default function Receiving(props) {
   //   console.log(props);
