@@ -4,12 +4,18 @@ import { v4 as uuidv4 } from 'uuid';
 
 export function convertToRoster(startID, Study, json) {
   // console.log(startID);
+  const defGroup = {
+    uid: 'G0',
+    prefix: 'A',
+    description: 'Group A',
+    population: 0
+  };
   let initialID = +startID,
     savedCrate = [],
     roster = [],
     nline,
     inc = 0,
-    Groups = Study.Groups,
+    Groups = Study.Groups ? Study.Groups : [defGroup],
     groupCount = Groups ? Groups.length : 1;
 
   json.forEach(function (line) {
@@ -163,6 +169,7 @@ export function saveAnimalsToBD(Roster, Manifestfile, Study) {
     await setDoc(ref, Animal);
     // console.log('saved', Animal);
   }
+  console.log('Roster', Roster);
   if (!Roster.length) {
     return;
   }

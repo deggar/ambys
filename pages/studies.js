@@ -20,7 +20,7 @@ import { doc, setDoc } from '@firebase/firestore';
 import { firestore, auth } from '../lib/firebase';
 
 const defGroup = {
-  uid: 'G1',
+  uid: 'G0',
   prefix: 'A',
   description: 'Group A',
   population: 0

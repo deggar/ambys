@@ -318,9 +318,7 @@ export default function Studies(props) {
           elevation={Elevation.TWO}
         >
           <div>
-            {/* <img src={createObjectURL} alt="add file" /> */}
-            {/* <h4>Select Document</h4> */}
-            <Button variant="contained" component="label">
+            {/* <Button variant="contained" component="label">
               Upload Study File
               <input
                 type="file"
@@ -328,8 +326,7 @@ export default function Studies(props) {
                 name="myImage"
                 onChange={uploadToClient}
               />
-            </Button>
-            {/* {`/blog/${encodeURIComponent(post.slug)}`} */}
+            </Button> */}
           </div>
           <div>
             <Link href={`/recshipment?sn=${Study.studyNumber.value}`} passHref>

@@ -38,6 +38,18 @@ const theUpdates = [
     type: `New`,
     head: `Ambys Receiving Roster Export`,
     desc: `First version of the Roster Export is available`
+  },
+  {
+    key: 5,
+    type: `Fix`,
+    head: `Uploading Files`,
+    desc: `Preview server was limiting file upload, users should be able to upload studies and manifests without issues.`
+  },
+  {
+    key: 6,
+    type: `Update`,
+    head: `Study Upload in Main Study list`,
+    desc: `All Study uploads should be done in the main 'Studies' page where all studies are listed. An updated workflow will include checking to see if there is alrady a Study in the system and get confirmation that it should be overwritten.`
   }
 ];
 

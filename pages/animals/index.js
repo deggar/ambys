@@ -21,7 +21,7 @@ import Router from 'next/router';
 import AnimalList from '../../components/AnimalList';
 
 const defGroup = {
-  uid: 'G1',
+  uid: 'G0',
   prefix: 'A',
   description: 'Group A',
   population: 0

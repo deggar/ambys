@@ -36,7 +36,7 @@ import Router from 'next/router';
 import ParseStudy from '../../util/ParseStudyv2';
 
 const defGroup = {
-  uid: 'G1',
+  uid: 'G0',
   prefix: 'A',
   description: 'Group A',
   population: 0
@@ -161,6 +161,7 @@ export default function StudyListing(props) {
       const theData = await ParseStudy(event);
       console.log('theData');
       console.log(theData);
+      theData.Groups = [defGroup];
       setStudy(theData);
       createStudyRecord(theData);
 
