@@ -33,6 +33,8 @@ import StudyListItem from '../../components/StudyListItem';
 import PostFeed from '../../components/PostFeed';
 import Router from 'next/router';
 
+import ParseStudy from '../../util/ParseStudyv2';
+
 const defGroup = {
   uid: 'G1',
   prefix: 'A',
@@ -153,9 +155,14 @@ export default function StudyListing(props) {
     // console.log('theURL', theURL);
     Router.push(theURL);
   }
-  const uploadToClient = (event) => {
+  const uploadToClient = async (event) => {
     if (event.target.files && event.target.files[0]) {
       const i = event.target.files[0];
+      const theData = await ParseStudy(event);
+      console.log('theData');
+      console.log(theData);
+      setStudy(theData);
+      createStudyRecord(theData);
 
       setImage(i);
       setCreateObjectURL(URL.createObjectURL(i));
@@ -163,14 +170,17 @@ export default function StudyListing(props) {
   };
 
   const uploadToServer = async (event) => {
-    const body = new FormData();
-    body.append('file', image);
-    // console.log(body);
-    // console.log('====prereq===');
-    const response = await fetch('/api/file', {
-      method: 'POST',
-      body
-    });
+    const theData = await ParseStudy(event);
+    setStudy(theData);
+    createStudyRecord(theData);
+    // const body = new FormData();
+    // body.append('file', image);
+    // // console.log(body);
+    // // console.log('====prereq===');
+    // const response = await fetch('/api/file', {
+    //   method: 'POST',
+    //   body
+    // });
     if (response.ok) {
       const theData = await response.json();
       //   console.log(theData);
@@ -198,7 +208,7 @@ export default function StudyListing(props) {
             {/* <img src={createObjectURL} alt="add file" /> */}
             {/* <h4>Select Document</h4> */}
             <Button variant="contained" component="label">
-              Select File
+              Select Study File
               <input
                 type="file"
                 hidden
