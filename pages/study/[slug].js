@@ -99,7 +99,7 @@ const defStudy = {
   }
 };
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { slug } = params;
 
   let post;
@@ -117,36 +117,58 @@ export async function getStaticProps({ params }) {
   path = postRef.path;
 
   return {
-    props: { post, path },
-    revalidate: 30
+    props: { post, path }
   };
 }
 
-export async function getStaticPaths() {
-  // Improve my using Admin SDK to select empty docs
-  const collectionRef = collectionGroup(firestore, 'Study');
-  const snapshot = await getDocs(collectionRef);
+// export async function getStaticProps({ params }) {
+//   const { slug } = params;
 
-  const paths = snapshot.docs.map((doc) => {
-    const { studyNumber } = doc.data();
-    const slug = studyNumber.value;
-    // console.log('slug', slug);
-    return {
-      params: { slug }
-    };
-  });
+//   let post;
+//   let path;
 
-  // const paths = [];
+//   let proto = slug.slice(0, slug.lastIndexOf('-'));
 
-  return {
-    // must be in this format:
-    // paths: [
-    //   { params: { username, slug }}
-    // ],
-    paths,
-    fallback: 'blocking'
-  };
-}
+//   const postRef = doc(
+//     firestore,
+//     `/Protocols/${proto}/StudyDesign/${slug}/Study`,
+//     slug
+//   );
+//   post = postToJSON(await getDoc(postRef));
+//   //   console.log(post);
+//   path = postRef.path;
+
+//   return {
+//     props: { post, path },
+//     revalidate: 30
+//   };
+// }
+
+// export async function getStaticPaths() {
+//   // Improve my using Admin SDK to select empty docs
+//   const collectionRef = collectionGroup(firestore, 'Study');
+//   const snapshot = await getDocs(collectionRef);
+
+//   const paths = snapshot.docs.map((doc) => {
+//     const { studyNumber } = doc.data();
+//     const slug = studyNumber.value;
+//     // console.log('slug', slug);
+//     return {
+//       params: { slug }
+//     };
+//   });
+
+//   // const paths = [];
+
+//   return {
+//     // must be in this format:
+//     // paths: [
+//     //   { params: { username, slug }}
+//     // ],
+//     paths,
+//     fallback: 'blocking'
+//   };
+// }
 
 export default function Studies(props) {
   //   console.log(props);
