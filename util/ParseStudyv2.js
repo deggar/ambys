@@ -4,6 +4,13 @@ import camelCase from 'lodash/camelCase.js';
 import mammoth from 'mammoth';
 import { extractRawText } from 'mammoth';
 
+const defGroup = {
+  uid: 'G0',
+  prefix: 'A',
+  description: 'Group A',
+  population: 0
+};
+
 const defStudy = {
   test: '',
   transplantDate: {
@@ -91,6 +98,10 @@ export default async function ParseStudy(e) {
           return r();
         })
         .then((text) => {
+          console.log('pretext');
+          console.log(text);
+          text.Groups = [defGroup];
+          console.log('posttext');
           console.log(text);
           console.timeEnd();
           resolve(text);

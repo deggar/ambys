@@ -161,7 +161,7 @@ export default function StudyListing(props) {
       const theData = await ParseStudy(event);
       console.log('theData');
       console.log(theData);
-      theData.Groups = [defGroup];
+      // theData.Groups = [defGroup];
       setStudy(theData);
       createStudyRecord(theData);
 
