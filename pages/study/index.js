@@ -163,10 +163,11 @@ export default function StudyListing(props) {
       console.log(theData);
       // theData.Groups = [defGroup];
       setStudy(theData);
+      console.log('Study', Study);
       createStudyRecord(theData);
 
-      setImage(i);
-      setCreateObjectURL(URL.createObjectURL(i));
+      // setImage(i);
+      // setCreateObjectURL(URL.createObjectURL(i));
     }
   };
 
