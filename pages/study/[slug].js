@@ -127,14 +127,16 @@ export async function getStaticPaths() {
   const collectionRef = collectionGroup(firestore, 'Study');
   const snapshot = await getDocs(collectionRef);
 
-  const paths = snapshot.docs.map((doc) => {
-    const { studyNumber } = doc.data();
-    const slug = studyNumber.value;
-    // console.log('slug', slug);
-    return {
-      params: { slug }
-    };
-  });
+  // const paths = snapshot.docs.map((doc) => {
+  //   const { studyNumber } = doc.data();
+  //   const slug = studyNumber.value;
+  //   // console.log('slug', slug);
+  //   return {
+  //     params: { slug }
+  //   };
+  // });
+
+  const paths = [];
 
   return {
     // must be in this format:
