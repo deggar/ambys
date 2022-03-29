@@ -3,7 +3,7 @@ import Link from 'next/link';
 function RosterList({ rosters }) {
   // console.log('rosters', rosters);
   return rosters
-    ? rosters.map((roster) => <Roster roster={roster} key={roster.Study} />)
+    ? rosters.map((roster) => <Roster roster={roster} key={roster.ID} />)
     : null;
 }
 

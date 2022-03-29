@@ -29,8 +29,9 @@ import UploadManifest from '../../components/UploadManifest';
 import ManifestTable from '../../components/ManifestTable';
 // import RosterTable2 from '../../components/RosterTable2';
 import RosterTableNoDND from '../../components/RosterTableNoDND';
-import ExportRoster from '../../components/ExportRoster';
+import ExportRoster2 from '../../components/ExportRoster2';
 import ParseBWworksheet from '../../util/ParseBWworksheet';
+import ExportBWCO from '../../components/ExportBWCO';
 
 export async function getStaticProps({ params }) {
   const { slug } = params;
@@ -112,11 +113,13 @@ export default function Receiving(props) {
         <Typography variant="h6" sx={{ margin: '.7rem', display: 'inline' }}>
           Group Roster for {Study.studyNumber.value}
         </Typography>
-        <ExportRoster Roster={props.roster} />
-        <Button variant="contained" component="label">
+        <ExportRoster2 Roster={props.roster} />
+        <ExportBWCO Roster={props.roster} />
+
+        {/* <Button variant="contained" component="label">
           Upload BW File
           <input type="file" hidden name="bwfile" onChange={selectBW} />
-        </Button>
+        </Button> */}
       </Box>
       {Manifestfile && Roster == null && (
         <ManifestTable Manifestfile={Manifestfile} />

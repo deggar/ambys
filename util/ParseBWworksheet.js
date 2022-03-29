@@ -144,6 +144,7 @@ async function ParseBWworksheet(e, callback) {
       // range.e.c = 23; // <--
       // console.log(range);
       //get next section
+      //get dates
       range.s.r = 3; // <-- zero-indexed, so setting to 1 will skip row 0
       range.e.r = 4; // <-- zero-indexed, so setting to 1 will skip row 0
       range.s.c = 9; // <--
@@ -162,14 +163,35 @@ async function ParseBWworksheet(e, callback) {
       // console.log(Object.keys(roa[0]));
       const obj = roa[0];
       let obj2 = [];
+      let svDate = null;
+      let errorDateObj = [];
       for (const property in obj) {
         // console.log(`${property}: ${obj[property]}`);
         // console.log(property.substring(0, 7));
         if (property.substring(0, 7) != '__EMPTY') {
+          if (!svDate) {
+            svDate = new Date(property.replace(/[^0-9//]/g, ''));
+            console.log('origin date', svDate);
+          }
+          if (svDate.getTime() > new Date(property).getTime()) {
+            console.log(
+              'error',
+              svDate,
+              'current',
+              property,
+              'index',
+              obj2.length
+            );
+            errorDateObj[obj2.length] = 'Error in Sequence';
+          } else {
+            console.log('good', svDate, 'current', property);
+          }
           obj2.push(property);
+          svDate = obj2.length == 1 ? svDate : new Date(property);
         }
       }
       theData.theDates = obj2;
+      theData.theDatesError = errorDateObj;
       // console.log('obj2', obj2);
       //get first columns
       range = setRange;

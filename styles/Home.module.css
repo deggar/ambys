@@ -108,6 +108,14 @@
   margin-left: 0.5rem;
 }
 
+.subHeading {
+  font-size: 2rem;
+}
+
+.bwsection {
+  width: 95%;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

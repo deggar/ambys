@@ -15,7 +15,11 @@ function BWTable({ BWdata, BWdates, BWfile }) {
   return (
     <div>
       <h2>{BWfile.StudyNumber}</h2>
-      <AnimalBWList2 animals={BWdata} BWdates={BWdates}></AnimalBWList2>
+      <AnimalBWList2
+        animals={BWdata}
+        BWdates={BWdates}
+        BWfile={BWfile}
+      ></AnimalBWList2>
     </div>
   );
 }

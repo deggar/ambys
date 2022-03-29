@@ -36,9 +36,9 @@ export async function getServerSideProps(context) {
   //     limit(LIMIT)
   //   );
   const postsQuery = await getDocs(collectionRef);
-  console.log(postsQuery);
+  // console.log(postsQuery);
   const animals = await postsQuery.docs.map(postToJSON);
-  console.log('animals', animals);
+  // console.log('animals', animals);
   return {
     props: { animals } // will be passed to the page component as props
   };

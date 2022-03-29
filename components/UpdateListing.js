@@ -9,47 +9,34 @@ const lightTheme = createTheme({ palette: { mode: 'light' } });
 
 const theUpdates = [
   {
-    key: 0,
-    type: `Update`,
-    head: `Shipping Manifest Import`,
-    desc: `Shipping Manifest import now correctly identifies the 'cloudy
-    eyes?' column`
-  },
-  {
-    key: 1,
-    type: `New`,
-    head: `Shipping Manifest List`,
-    desc: `Shipping Manifest imports are now being saved and will show in the Shipping list`
-  },
-  {
-    key: 2,
-    type: `Fix`,
-    head: `Group Setup`,
-    desc: `Group creation, deletion and editing is working better now. Group editing will soon be limited to new or edited manifests.`
-  },
-  {
     key: 3,
     type: `Issue`,
     head: `Group Sorting`,
     desc: `Animals can be dragged, but when dropped they return to their original position. A fix is coming soon`
   },
   {
-    key: 4,
-    type: `New`,
-    head: `Ambys Receiving Roster Export`,
-    desc: `First version of the Roster Export is available`
-  },
-  {
-    key: 5,
-    type: `Fix`,
-    head: `Uploading Files`,
-    desc: `Preview server was limiting file upload, users should be able to upload studies and manifests without issues.`
-  },
-  {
-    key: 6,
+    key: 7,
     type: `Update`,
-    head: `Study Upload in Main Study list`,
-    desc: `All Study uploads should be done in the main 'Studies' page where all studies are listed. An updated workflow will include checking to see if there is alrady a Study in the system and get confirmation that it should be overwritten.`
+    head: `Ambys Receiving Roster Export`,
+    desc: `Version 3 of the Roster Export is available. Version 3 includes a new format for the export with styling, coloring and the Ambys logo.`
+  },
+  {
+    key: 8,
+    type: `Update`,
+    head: `Body Weight/CO file Export`,
+    desc: `The Body Weight/CO file export is now available. This file is an empty template ready for data input of daily body wieghts and Clinical Observations.`
+  },
+  {
+    key: 9,
+    type: `Update`,
+    head: `Body Weight/CO file Upload`,
+    desc: `Upload a Body Weight/CO file into the system to capture the daily body weights and observations. This data is not saved to the system during this testing phase`
+  },
+  {
+    key: 10,
+    type: `Update`,
+    head: `Workflow Update`,
+    desc: `The workflow has been adjusted to remove extra clicks/actions. If a study document and a shipping manifest is available the user can have a study up and running in less than a minute.`
   }
 ];
 

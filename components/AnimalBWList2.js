@@ -5,11 +5,13 @@ import { useState } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
-function AnimalBWList({ animals, BWdates }) {
+function AnimalBWList({ animals, BWdates, BWfile }) {
   //   console.log('animals', animals);
   //   const [rowData, setrowData] = useState(null);
   //   const [columnDefs, setcolumnDefs] = useState(null);
+  console.log('bwfile', BWfile);
   const theDates = BWdates;
+  const theDatesError = BWfile.theDatesError;
   console.log('theDates', theDates);
   var data = [];
   var colSet = [
@@ -17,27 +19,77 @@ function AnimalBWList({ animals, BWdates }) {
     { headerName: 'Animal ID', field: 'ID', pinned: 'left', width: 100 },
     { headerName: 'Chip #', field: 'RFID', pinned: 'left', width: 120 },
     { headerName: 'Sex', field: 'Sex', pinned: 'left', width: 70 },
-    { headerName: 'Highest BW', field: 'HighBW', pinned: 'left', width: 100 },
-    { headerName: '% BW Loss', field: 'HighWT', pinned: 'left', width: 100 },
+    { headerName: 'DOB', field: 'DOB', pinned: 'left', width: 90 },
+    {
+      headerName: 'Highest BW',
+      field: 'HighBW',
+      pinned: 'left',
+      width: 10,
+      resizable: true
+    },
+    {
+      headerName: '% BW Loss',
+      field: 'HighWT',
+      pinned: 'left',
+      width: 10,
+      resizable: true
+    },
     {
       headerName: 'Current Clinical Score',
       field: 'CCS',
       pinned: 'left',
-      width: 100
+      width: 10,
+      resizable: true
     },
-    { headerName: 'DOB', field: 'DOB', pinned: 'left', width: 90 },
     {
       headerName: 'PreShipment BW',
       field: 'PreBW',
       pinned: 'left',
-      width: 90
+      width: 10,
+      resizable: true
     },
-    { headerName: 'BW', field: 'BW0', pinned: 'left', width: 50 },
-    { headerName: 'Clinical Score', field: 'BS0', pinned: 'left', width: 50 },
-    { headerName: 'SMT', field: 'SMT0', pinned: 'left', width: 50 },
-    { headerName: 'MF', field: 'MF0', pinned: 'left', width: 50 },
-    { headerName: 'DG', field: 'DG0', pinned: 'left', width: 50 },
-    { headerName: 'LRS', field: 'LRS0', pinned: 'left', width: 50 }
+    {
+      headerName: 'BW',
+      field: 'BW0',
+      pinned: 'left',
+      width: 10,
+      resizable: true
+    },
+    {
+      headerName: 'Clinical Score',
+      field: 'BS0',
+      pinned: 'left',
+      width: 10,
+      resizable: true
+    },
+    {
+      headerName: 'SMT',
+      field: 'SMT0',
+      pinned: 'left',
+      width: 10,
+      resizable: true
+    },
+    {
+      headerName: 'MF',
+      field: 'MF0',
+      pinned: 'left',
+      width: 10,
+      resizable: true
+    },
+    {
+      headerName: 'DG',
+      field: 'DG0',
+      pinned: 'left',
+      width: 10,
+      resizable: true
+    },
+    {
+      headerName: 'LRS',
+      field: 'LRS0',
+      pinned: 'left',
+      width: 10,
+      resizable: true
+    }
   ];
   if (animals) {
     const maxcol = animals[0].MeasureWeight.length;
@@ -76,18 +128,32 @@ function AnimalBWList({ animals, BWdates }) {
     console.log('data', data);
 
     for (let step = 1; step < maxcol; step++) {
-      // Runs 5 times, with values of step 0 through 4.
-      //   console.log('Walking east one step');
-      // { headerName: 'Col A', field: 'a'},
       const children = [];
-      children.push({ headerName: 'BW', field: `BW0${step}`, width: 80 });
+      children.push({
+        headerName: 'BW',
+        field: `BW0${step}`,
+        width: 80,
+        type: 'numericColumn'
+      });
       children.push({ headerName: 'BS', field: `BS0${step}`, width: 60 });
       children.push({ headerName: 'SMT', field: `SMT0${step}`, width: 70 });
       children.push({ headerName: 'MF', field: `MF0${step}`, width: 60 });
       children.push({ headerName: 'DG', field: `DG0${step}`, width: 60 });
       children.push({ headerName: 'LRS', field: `LRS0${step}`, width: 70 });
       if (theDates) {
-        colSet.push({ headerName: theDates[step], children: children });
+        if (theDatesError[step]) {
+          colSet.push({
+            headerName: theDates[step],
+            children: children,
+            headerClass: 'posserror'
+          });
+        } else {
+          colSet.push({
+            headerName: theDates[step],
+            marryChildren: true,
+            children: children
+          });
+        }
       }
     }
     console.log('colSet', colSet);

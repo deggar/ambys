@@ -138,7 +138,7 @@ export function convertToRoster(startID, Study, json) {
   return roster;
 }
 
-export function saveAnimalsToBD(Roster, Manifestfile, Study) {
+export async function saveAnimalsToBD(Roster, Manifestfile, Study) {
   // console.log('save to db');
   //save roster with uuid
 
@@ -162,6 +162,7 @@ export function saveAnimalsToBD(Roster, Manifestfile, Study) {
     const rosterRef = doc(firestore, `/Rosters/`, slug);
     await setDoc(rosterRef, saveRoster);
     // console.log('saveRoster', saveRoster);
+    return slug;
   }
 
   async function createAnimalRecord(Animal) {
@@ -200,5 +201,6 @@ export function saveAnimalsToBD(Roster, Manifestfile, Study) {
     list.push(nline);
   });
 
-  createRoster(list, Manifestfile, Study);
+  const theID = await createRoster(list, Manifestfile, Study);
+  return theID;
 }

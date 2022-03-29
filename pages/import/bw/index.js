@@ -8,6 +8,7 @@ import {
 } from '@firebase/firestore';
 import { firestore, auth, postToJSON } from '../../../lib/firebase';
 import BWTable from '../../../components/BWTable';
+import styles from '../../../styles/Home.module.css';
 
 import { Card, Elevation, H3, H5 } from '@blueprintjs/core';
 import {
@@ -63,14 +64,18 @@ export default function ImportingBW(props) {
   };
 
   return (
-    <>
-      <Button variant="contained" component="label">
-        Upload BW File
-        <input type="file" hidden name="bwfile" onChange={selectBW} />
-      </Button>
-      {BWanimals && (
-        <BWTable BWdata={BWanimals} BWdates={BWdates} BWfile={BWfile} />
-      )}
-    </>
+    <main className={styles.main}>
+      <section>
+        <Button variant="contained" component="label">
+          Upload BW File
+          <input type="file" hidden name="bwfile" onChange={selectBW} />
+        </Button>
+      </section>
+      <section className={styles.bwsection}>
+        {BWanimals && (
+          <BWTable BWdata={BWanimals} BWdates={BWdates} BWfile={BWfile} />
+        )}
+      </section>
+    </main>
   );
 }

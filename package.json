@@ -17,6 +17,8 @@
     "ag-grid-community": "^27.0.1",
     "ag-grid-react": "^27.0.1",
     "dayjs": "^1.10.7",
+    "excel-column-name": "^1.0.1",
+    "exceljs": "^4.3.0",
     "file-saver": "^2.0.5",
     "firebase": "^9.6.4",
     "formidable": "^2.0.1",

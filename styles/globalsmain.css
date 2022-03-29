@@ -176,3 +176,11 @@ button.btn-logo {
   font-size: 1.5rem;
   padding: 0.5rem 1rem;
 }
+
+.posserror {
+  background-color: red;
+}
+
+button.active {
+  background-color: lavender;
+}

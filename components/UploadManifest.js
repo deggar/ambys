@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { useRouter } from 'next/router';
 import XLSX from 'xlsx';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -30,6 +31,7 @@ function UploadManifest({
   setAnimalStartID,
   Study
 }) {
+  const router = useRouter();
   //   const [Manifestfile, setManifestfile] = useState(null);
   async function ParseShippingManifest(e) {
     //   const { Manifest } = useContext(UserContext);
@@ -167,7 +169,11 @@ function UploadManifest({
             component="label"
             onClick={() => {
               console.log('NEXT');
-              saveAnimalsToBD(Roster, Manifestfile, Study);
+              saveAnimalsToBD(Roster, Manifestfile, Study).then((data) => {
+                console.log('data', data);
+                router.push(`/receiving/${data}`);
+              });
+              //go to receiving/1249ac6e-c083-4524-8bd7-5f776eb54116
             }}
           >
             Upload Animals into Study

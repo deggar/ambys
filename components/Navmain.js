@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import {
   Alignment,
   Button,
@@ -24,17 +25,15 @@ function SignOutButton() {
 // Top navbar
 export default function Navmain() {
   const { user, username } = useContext(UserContext);
-
+  const router = useRouter();
   return (
     <Navbar>
       <NavbarGroup align={Alignment.LEFT}>
         <Image src="/ambys-color-logo.svg" alt="other" width={80} height={50} />
         {!user && (
-          <li>
-            <Link href="/enter" passHref>
-              <Button className={Classes.MINIMAL} icon="log-in" text="Login" />
-            </Link>
-          </li>
+          <Link href="/enter" passHref>
+            <Button className={Classes.MINIMAL} icon="log-in" text="Login" />
+          </Link>
         )}
         <NavbarHeading className="pl-2"> Ambys Center</NavbarHeading>
         {user && <SignOutButton />}
@@ -46,7 +45,11 @@ export default function Navmain() {
         {user && (
           <Link href="/study" passHref>
             <Button
-              className={Classes.MINIMAL}
+              className={
+                router.pathname == '/study'
+                  ? 'active bp3-intent-'
+                  : 'bp3-minimal'
+              }
               icon="projects"
               text="Studies"
             />
@@ -59,7 +62,29 @@ export default function Navmain() {
         )}
         {user && (
           <Link href="/receiving" passHref>
-            <Button className={Classes.MINIMAL} icon="route" text="Shipping" />
+            <Button
+              className={
+                router.pathname == '/receiving' ||
+                router.pathname.includes('/receiving/')
+                  ? 'active bp3-intent-'
+                  : 'bp3-minimal'
+              }
+              icon="route"
+              text="Shipping"
+            />
+          </Link>
+        )}
+        {user && (
+          <Link href="/import" passHref>
+            <Button
+              className={
+                router.pathname == '/import'
+                  ? 'active bp3-intent-'
+                  : 'bp3-minimal'
+              }
+              icon="import"
+              text="Import Files"
+            />
           </Link>
         )}
       </NavbarGroup>
