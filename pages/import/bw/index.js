@@ -40,11 +40,22 @@ export default function ImportingBW(props) {
   const [BWanimals, setBWanimals] = useState(null);
   const [BWdates, setBWdates] = useState(null);
 
+  async function createAnimalBWRecord(animal) {
+    animal.MeasureWeight.forEach(async (bw) => {
+      const post = bw.PostDate.replace(/\//g, '-');
+      const ref = doc(firestore, `Observations/${animal.RFID}/Measure/${post}`);
+      await setDoc(ref, bw);
+    });
+    console.log('animal', animal);
+  }
+
   const callReader = function (data) {
     console.log('data 41', data);
     setBWfile(data);
     setBWanimals(data.animals);
     setBWdates(data.theDates);
+    //save data to firebase
+    data.animals.forEach(createAnimalBWRecord);
   };
   const selectBW = async (event) => {
     // console.log('parse BW', event);

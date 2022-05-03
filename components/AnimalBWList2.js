@@ -6,14 +6,15 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 function AnimalBWList({ animals, BWdates, BWfile }) {
-  //   console.log('animals', animals);
+  console.log('animals', animals);
   //   const [rowData, setrowData] = useState(null);
   //   const [columnDefs, setcolumnDefs] = useState(null);
   console.log('bwfile', BWfile);
-  const theDates = BWdates;
+  const theDates = BWfile.theDates;
   const theDatesError = BWfile.theDatesError;
   console.log('theDates', theDates);
   var data = [];
+  let rowData, columnDefs;
   var colSet = [
     { headerName: 'Group', field: 'Group', pinned: 'left', width: 80 },
     { headerName: 'Animal ID', field: 'ID', pinned: 'left', width: 100 },
@@ -158,9 +159,11 @@ function AnimalBWList({ animals, BWdates, BWfile }) {
     }
     console.log('colSet', colSet);
     // setrowData(data);
-    const rowData = data;
+    rowData = data;
     // setcolumnDefs(colSet);
-    const columnDefs = colSet;
+    columnDefs = colSet;
+  } else {
+    console.log('no animals');
   }
 
   return (
